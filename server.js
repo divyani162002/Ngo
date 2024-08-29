@@ -1,5 +1,6 @@
 const express = require("express");
 require("dotenv").config();
+const cors = require("cors");
 const app = express();
 const {errorHandler} = require("./middleware/errormiddleware.js")
 const bodyParser = require("body-parser");
@@ -7,12 +8,12 @@ const fileupload = require("express-fileupload");
 
 
 app.use(fileupload())
-
+app.use(cors())
+app.use(express.json());
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json());
-app.use(bodyParser.json());
 
 // // animal recues 
 const rescues = require("./Routes/rescuedAnimalRoute.js")

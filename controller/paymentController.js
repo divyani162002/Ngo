@@ -1,6 +1,7 @@
 
 const Razorpay = require("razorpay");
-const crypto= require("crypto")
+const crypto = require("crypto")
+const Donation=require("../model/donationForm")
 
 // Initialize Razorpay
 const razorpay = new Razorpay({
@@ -8,7 +9,7 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 exports.createPayment = async (req, res) => {
-  const { amount } = req.body;
+  const { amount } = await Donation.findOne({amount})
 
   if (!amount) {
     return res.status(400).json({
