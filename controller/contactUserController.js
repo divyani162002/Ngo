@@ -12,40 +12,6 @@ exports.getContactUser = async (req, res) => {
   }
 };
 
-// exports.addContactUser = async (req, res) => {
-//   const { name, email, subject, message, location } = req.body;
-//   ;
-
-//     try {
-//         const newContactUser = await new User(
-//           {
-//             name,
-//                 email,
-//                 subject,
-//                 message,
-//                 location
-//           },
-//         );
-//      res.status(200).json({ message: " user is created" });
-//       console.log(newContactUser)
-//       res.json({newContactUser})
-
-//     const newUser = new User([
-//       {
-//         name,
-//         email,
-//         subject,
-//         message,
-//       },
-//     ]);
-//     await newUser.save();
-//     res.status(200).json({ message: " user is created" },new);
-//   } catch (error) {
-//     res.status(400).json({
-//       message: "user not found",
-//     });
-//   }
-// };
 exports.addContactUser = async (req, res) => {
   const { name, email, subject, message, location } = req.body;
 
@@ -75,3 +41,34 @@ exports.addContactUser = async (req, res) => {
     });
   }
 };
+
+exports.deleteContactUser =async (req,res) => {
+  try {
+   
+    const id = req.params.id
+    console.log(id)
+    if (!id) {
+      return res.status(400).json({
+        msg: "rescue not found"
+      })
+    }
+   
+    const user = await User.findByIdAndDelete(id);
+     if (!user) {
+       return res.status(400).json({
+         msg: "users not found",
+       });
+     }
+     return res
+       .status(200)
+       .json({ msg: "users deleted successfully", user });
+
+
+  } catch (error) {
+    console.log(error);
+     return res.status(500).json({ message: error.message });
+  }
+  
+
+
+}
