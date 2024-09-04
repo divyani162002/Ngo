@@ -17,7 +17,13 @@ const PORT = process.env.PORT || 5000;
 
 // // animal recues 
 const rescues = require("./Routes/rescuedAnimalRoute.js")
-app.use("/rescues",rescues)
+app.use("/rescues", rescues)
+
+// adoption routes
+const adoption = require("./Routes/adoptionRoute.js")
+app.use("/adoption",adoption)
+
+
 
 // Admin routes
 const admin = require("./Routes/adminRoute.js");
@@ -53,7 +59,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(errorHandler)
-
+ 
 
 // db connection
 const connectDB = require("./DB_connection/configdb.js");
