@@ -6,7 +6,7 @@ const donationSchema = new mongoose.Schema({
         type: String,
         require:true
     },
-    eamil: {
+    email: {
         type: String,
         require: true,
         unique:true
