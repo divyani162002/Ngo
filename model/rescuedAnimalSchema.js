@@ -10,7 +10,7 @@ const resucedSchema = new mongoose.Schema({
  
   status: {
     type: String,
-    require: true,
+    // require: true,
   },
   admission: {
     type: Date,
@@ -18,7 +18,7 @@ const resucedSchema = new mongoose.Schema({
   },
     species: {
         type: String,
-        require:true
+        // require:true
   },
 
     breed: {
@@ -32,7 +32,7 @@ const resucedSchema = new mongoose.Schema({
 
   gender: {
         type: String,
-        require:true
+        // require:true
     },
 
     age: {
@@ -41,7 +41,7 @@ const resucedSchema = new mongoose.Schema({
 
     location: {
         type: String,
-        require:true
+        // require:true
     },
     imgUrl: {
         type: String,

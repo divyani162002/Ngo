@@ -1,12 +1,14 @@
 const express = require("express");
 
 const router = express.Router();
+const {
+  getrescuedAnimals,
+  deleterescues,
+  imageUpload,
+} = require("../controller/rescueAnimalController");
 
-const rescuedAnimalController = require("../controller/rescueAnimalController");
-
-router.get("/", rescuedAnimalController.getrescuedAnimals);
-router.post("/rescuedAnimals", rescuedAnimalController.addrescues);
-router.delete("/rescuedAnimals/:id", rescuedAnimalController.deleterescues);
-
+router.get("/", getrescuedAnimals);
+router.post("/rescuedAnimals", imageUpload); //imageUpload
+router.delete("/rescuedAnimals/:id", deleterescues);
 
 module.exports = router;

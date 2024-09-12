@@ -110,9 +110,6 @@ exports.searchVolunteer = async (req, res) => {
     }
 
     res.json(volunteers);
-  
-
-
 
   } catch (error) {
     console.error(error.message);

@@ -7,7 +7,12 @@ const bodyParser = require("body-parser");
 const fileupload = require("express-fileupload"); 
 
 
-app.use(fileupload())
+app.use(fileupload(
+  {
+    useTempFiles: true,
+    tempFileDir:"/tmp/"
+  }
+))
 app.use(cors())
 app.use(express.json());
 app.use(bodyParser.json());
@@ -59,6 +64,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(errorHandler)
+
  
 
 // db connection
