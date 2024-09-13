@@ -1,4 +1,7 @@
 const Adoption = require("../model/adoptionSchema");
+const fs = require("fs");
+const path = require("path");
+const cloudinary = require("cloudinary").v2;
 
 
 exports.getAdoptionDetails = async (req, res) => {
@@ -16,33 +19,80 @@ exports.getAdoptionDetails = async (req, res) => {
     
 }
 
+function FileTypeSupported(type, supportedType) {
+  return supportedType.includes(type);
+}
+
+async function uploadFileToCloudinary(file, folder) {
+  const options = { folder };
+
+  // options.resource_type = "auto";
+
+  return await cloudinary.uploader.upload(file.tempFilePath, options);
+}
+
+
 exports.addadoptionDetails = async (req, res) => {
-    const { species, breed, animaldetails, age, location } = req.body
-      try {
-        // Create a new user object
-        const newadoptionDetail = new Adoption({
-          species,
-          breed,
-          animaldetails,
-          age,
-          location,
-        });
+  try {
+    const { species, breed, animaldetails, age, location } = req.body;
 
-        // Save the new user to the database
-        await newadoptionDetail.save();
+    const file = req.files.file;
+    console.log(file);
 
-        // Send a single response
-        res.status(201).json({
-          message: "adoption detail is created",
-          newadoptionDetail,
-        });
-          console.log(newadoptionDetail)
-      } catch (error) {
-        // Handle any errors
-        res.status(400).json({
-          message: "adoption not created",
-          error: error.message,
-        });
+    const supportedType = ["jpg", "jpeg", "png", "pdf"];
+
+    const fileType = file.name.split(".")[1].toLowerCase();
+    console.log("file Type", fileType);
+
+    if (!FileTypeSupported(fileType, supportedType)) {
+      return res.status(400).json({ message: "file formate not supported" });
+    }
+
+    //upload file to cloudinary
+    const response = await uploadFileToCloudinary(file, "ngo_photos");
+    console.log(response);
+
+    
+    try {
+      console.log("Files Received ");
+
+      const newadoptionDetail = new Adoption({
+      species,
+      breed,
+      animaldetails,
+      age,
+      location,
+      imgUrl: response.secure_url,
+    });
+      newadoptionDetail.save()
+    
+      return res
+        .status(200)
+        .json({ message: "adoption detail is created", newadoptionDetail });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("server error- " + error);
+    }
+
+    //db me entry
+    const fileData = await Adoption.create({
+      species,
+      breed,
+      animaldetails,
+      age,
+      location,
+      imgUrl: response.secure_url,
+    });
+
+    res.status(200).json({
+      message: "Image successfully uploaded at",
+      imgUrl: response.secure_url,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "adoption not created",
+    });
       }
 }
 

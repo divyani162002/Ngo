@@ -32,7 +32,7 @@ exports.addVolunteer = async (req, res) => {
     const { name, joining, gender, age, phoneNumber, district, imgUrl } =
       req.body;
 
-    const file = req.files.filge;
+    const file = req.files.file;
     console.log(file);
 
     const supportedType = ["jpg", "jpeg", "png", "pdf"];
