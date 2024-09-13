@@ -15,59 +15,6 @@ exports.getVolunteer = async (req, res) => {
   }
 };
 
-// exports.addVolunteer = async (req, res) => {
-//   const { name, joining, gender, age,phoneNumber, district, imgUrl } = req.body;
-
-//   try {
-//     // Create a new entry
-//     console.log("file recieved", req.files);
-//     if (!req.files || !req.files.file) {
-//       return res.status(400).json({
-//         message: "no file uploaded",
-//       });
-//     }
-
-//     const file = req.files.file;
-//     const uploadDir = path.join(__dirname, "files");
-
-//     // Create the directory if it doesn't exist
-//     if (!fs.existsSync(uploadDir)) {
-//       fs.mkdirSync(uploadDir);
-//     }
-
-//     const filePath = path.join(uploadDir, Date.now() + "_" + file.name);
-
-//     file.mv(filePath, (error) => {
-//       if (error) {
-//         return res
-//           .status(500)
-//           .json({ message: "Error saving file in volunteer", error });
-//       }
-
-//       const newVolunteer = new Volunteer({
-//         name,
-//         joining,
-//         gender,
-//         age,
-//         phoneNumber,
-//         district,
-//         imgUrl: filePath,
-//       });
-//       newVolunteer.save();
-//       res.status(201).json({
-//         message: "volunteer added successfully",
-//         newVolunteer,
-//       });
-//       console.log(newVolunteer);
-//     });
-//   } catch (error) {
-//     // Handle errors and send an appropriate response
-//     res.status(400).json({
-//       message: "Failed to add volunteer",
-//       error: error.message, // Optionally include the error message for debugging
-//     });
-//   }
-// };
 function FileTypeSupported(type, supportedType) {
   return supportedType.includes(type);
 }

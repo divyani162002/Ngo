@@ -44,7 +44,7 @@ exports.imageUpload = async (req, res) => {
             location,
     } = req.body;
 
-    const file = req.files.imageFile;
+    const file = req.files.file;
     console.log(file);
 
     const supportedType = ["jpg", "jpeg", "png", "pdf"];
